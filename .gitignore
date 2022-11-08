@@ -1,0 +1,15 @@
+# Swift Package Manager
+.build/
+!.swiftpm/xcode/package.xcworkspace
+
+# Xcode
+## User settings
+xcuserdata/
+
+## Obj-C/Swift specific
+*.hmap
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM

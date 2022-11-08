@@ -1,0 +1,55 @@
+
+version: 2.1
+
+
+orbs:
+  macos: circleci/macos@2.3.3
+
+
+default-executor: &default-executor
+  macos:
+    xcode: 14.1.0
+  working_directory: ~/circle-ci
+
+
+ios-simulator: &ios-simulator
+  version: "16.1"
+  platform: "iOS"
+  device: "iPhone 14"
+
+
+jobs:
+  build-test-ios:
+    <<: *default-executor
+
+    steps:
+      - checkout
+      - macos/preboot-simulator:
+          <<: *ios-simulator
+      - run:
+          name: Build target on iOS
+          command: xcodebuild build -scheme 'AmplifUtilsNotifications' -sdk iphonesimulator -destination "id=${MACOS_ORB_DEVICE_UDID}"
+      - run:
+          name: Run unit tests
+          command: xcodebuild test -scheme 'AmplifUtilsNotifications' -sdk iphonesimulator -destination "id=${MACOS_ORB_DEVICE_UDID}"
+
+  build-test-macos:
+    <<: *default-executor
+
+    steps:
+      - checkout
+      - run:
+          name: Build target on macOS
+          command: xcodebuild build -scheme 'AmplifUtilsNotifications' -sdk macosx -destination "platform=macOS"
+      - run:
+          name: Run unit tests
+          command: xcodebuild test -scheme 'AmplifUtilsNotifications' -sdk macosx -destination "platform=macOS"
+
+
+workflows:
+  test-ios:
+    jobs:
+      - build-test-ios
+  test-macos:
+    jobs:
+      - build-test-macos
