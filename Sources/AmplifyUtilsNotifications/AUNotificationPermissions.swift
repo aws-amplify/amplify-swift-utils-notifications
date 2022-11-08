@@ -33,7 +33,8 @@ public class AUNotificationPermissions {
     /// Request notification permissions
     /// - Parameter options: Requested notification options
     @discardableResult
-    public static func request(_ options: UNAuthorizationOptions) async throws -> Bool {
+    public static func request(_ options: UNAuthorizationOptions? = nil) async throws -> Bool {
+        let options = options ?? [.badge, .alert, .sound]
         let notificationsAllowed = try await UNUserNotificationCenter.current().requestAuthorization(
             options: options
         )
