@@ -28,10 +28,10 @@ jobs:
           <<: *ios-simulator
       - run:
           name: Build target on iOS
-          command: xcodebuild build -scheme 'AmplifUtilsNotifications' -sdk iphonesimulator -destination "id=${MACOS_ORB_DEVICE_UDID}"
+          command: xcodebuild build -scheme 'AmplifyUtilsNotifications' -sdk iphonesimulator -destination "id=${MACOS_ORB_DEVICE_UDID}"
       - run:
           name: Run unit tests
-          command: xcodebuild test -scheme 'AmplifUtilsNotifications' -sdk iphonesimulator -destination "id=${MACOS_ORB_DEVICE_UDID}"
+          command: xcodebuild test -scheme 'AmplifyUtilsNotifications' -sdk iphonesimulator -destination "id=${MACOS_ORB_DEVICE_UDID}"
 
   build-test-macos:
     <<: *default-executor
@@ -40,10 +40,10 @@ jobs:
       - checkout
       - run:
           name: Build target on macOS
-          command: xcodebuild build -scheme 'AmplifUtilsNotifications' -sdk macosx -destination "platform=macOS"
+          command: xcodebuild build -scheme 'AmplifyUtilsNotifications' -sdk macosx -destination "platform=macOS"
       - run:
           name: Run unit tests
-          command: xcodebuild test -scheme 'AmplifUtilsNotifications' -sdk macosx -destination "platform=macOS"
+          command: xcodebuild test -scheme 'AmplifyUtilsNotifications' -sdk macosx -destination "platform=macOS"
 
 
 workflows:
