@@ -19,17 +19,16 @@ final class AUNotificationServiceTests: XCTestCase {
         notificationContent.subtitle = AmplifyTest.randomAlphanumeric(length: 16)
         notificationContent.body = AmplifyTest.randomAlphanumeric(length: 64)
 
-
         let notificationRequest = UNNotificationRequest(
             identifier: AmplifyTest.randomAlphanumeric(),
             content: notificationContent,
             trigger: nil
         )
 
-        notificationService.didReceive(notificationRequest, withContentHandler: { content in
+        notificationService.didReceive(notificationRequest) { content in
             XCTAssertEqual(content, notificationContent)
             expect.fulfill()
-        })
+        }
         waitForExpectations(timeout: 1)
     }
 
@@ -57,14 +56,14 @@ final class AUNotificationServiceTests: XCTestCase {
             trigger: nil
         )
 
-        notificationService.didReceive(notificationRequest, withContentHandler: { content in
+        notificationService.didReceive(notificationRequest) { content in
             XCTAssertTrue(!content.attachments.isEmpty)
             let attachment = content.attachments.first!
             XCTAssertTrue(attachment.identifier.hasSuffix(".png"))
             let data = try? Data(contentsOf: attachment.url)
             XCTAssertEqual(mediaData, data)
             expect.fulfill()
-        })
+        }
         waitForExpectations(timeout: 1)
     }
 
@@ -86,10 +85,10 @@ final class AUNotificationServiceTests: XCTestCase {
             trigger: nil
         )
 
-        notificationService.didReceive(notificationRequest, withContentHandler: { content in
+        notificationService.didReceive(notificationRequest) { content in
             XCTAssertTrue(content.attachments.isEmpty)
             expect.fulfill()
-        })
+        }
         waitForExpectations(timeout: 1)
     }
 
@@ -118,10 +117,10 @@ final class AUNotificationServiceTests: XCTestCase {
             trigger: nil
         )
 
-        notificationService.didReceive(notificationRequest, withContentHandler: { content in
+        notificationService.didReceive(notificationRequest) { content in
             XCTAssertTrue(content.attachments.isEmpty)
             expect.fulfill()
-        })
+        }
         waitForExpectations(timeout: 1)
     }
 
@@ -138,9 +137,8 @@ final class AUNotificationServiceTests: XCTestCase {
                 identifier: AmplifyTest.randomAlphanumeric(),
                 content: notificationContent,
                 trigger: nil
-            ),
-            withContentHandler: {_ in }
-        )
+            )
+        ) { _ in }
 
         notificationService.contentHandler = { content in
             XCTAssertEqual(notificationContent, content)

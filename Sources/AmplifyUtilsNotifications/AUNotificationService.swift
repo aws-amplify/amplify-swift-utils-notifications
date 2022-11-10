@@ -22,12 +22,12 @@ open class AUNotificationService: UNNotificationServiceExtension {
     /// Default: PinpointNotificationPayload
     open var payloadSchema: AUNotificationPayload.Type = PinpointNotificationPayload.self
 
-    /// Defines the action of loading data from URL.
+    /// Function for retrieve data from remote URL.
     ///
-    /// You can override or replace it with your own implementation.
+    /// This is for testing only.
     ///
     /// Default: Data.init(contentsOf:options:)
-    open var loadDataFromURL: (URL) throws -> Data = { try Data(contentsOf: $0) }
+    var loadDataFromURL: (URL) throws -> Data = { try Data(contentsOf: $0) }
     
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
