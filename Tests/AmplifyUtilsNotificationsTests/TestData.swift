@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum AmplifyTest {}
+enum TestData { }
 
-extension AmplifyTest {
+extension TestData {
     static func randomAlphabet(length: Int = 8) -> String {
         assert(length > 0)
         let letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"

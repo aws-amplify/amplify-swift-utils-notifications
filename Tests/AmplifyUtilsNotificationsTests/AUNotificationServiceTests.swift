@@ -15,12 +15,12 @@ final class AUNotificationServiceTests: XCTestCase {
         let notificationService = AUNotificationService()
         let notificationContent = UNMutableNotificationContent()
         notificationContent.userInfo = [:]
-        notificationContent.title = AmplifyTest.randomAlphanumeric()
-        notificationContent.subtitle = AmplifyTest.randomAlphanumeric(length: 16)
-        notificationContent.body = AmplifyTest.randomAlphanumeric(length: 64)
+        notificationContent.title = TestData.randomAlphanumeric()
+        notificationContent.subtitle = TestData.randomAlphanumeric(length: 16)
+        notificationContent.body = TestData.randomAlphanumeric(length: 64)
 
         let notificationRequest = UNNotificationRequest(
-            identifier: AmplifyTest.randomAlphanumeric(),
+            identifier: TestData.randomAlphanumeric(),
             content: notificationContent,
             trigger: nil
         )
@@ -34,8 +34,8 @@ final class AUNotificationServiceTests: XCTestCase {
 
     func testDidReceiveNotificationWithRemoteMediaURL() {
         let expect = expectation(description: "Did receive notification")
-        let mediaURL = "https://\(AmplifyTest.randomAlphabet()).com/\(AmplifyTest.randomAlphanumeric()).png"
-        let mediaData = AmplifyTest.randomAlphanumeric(length: 64).data(using: .utf8)!
+        let mediaURL = "https://\(TestData.randomAlphabet()).com/\(TestData.randomAlphanumeric()).png"
+        let mediaData = TestData.randomAlphanumeric(length: 64).data(using: .utf8)!
 
         let notificationService = AUNotificationService()
         notificationService.loadDataFromURL = { url in
@@ -51,7 +51,7 @@ final class AUNotificationServiceTests: XCTestCase {
         ]
 
         let notificationRequest = UNNotificationRequest(
-            identifier: AmplifyTest.randomAlphanumeric(),
+            identifier: TestData.randomAlphanumeric(),
             content: notificationContent,
             trigger: nil
         )
@@ -69,7 +69,7 @@ final class AUNotificationServiceTests: XCTestCase {
 
     func testDidReceiveNotificationWithBrokenRemoteMediaURL() {
         let expect = expectation(description: "Did receive notification")
-        let mediaURL = AmplifyTest.randomAlphanumeric()
+        let mediaURL = TestData.randomAlphanumeric()
 
         let notificationService = AUNotificationService()
         let notificationContent = UNMutableNotificationContent()
@@ -80,7 +80,7 @@ final class AUNotificationServiceTests: XCTestCase {
         ]
 
         let notificationRequest = UNNotificationRequest(
-            identifier: AmplifyTest.randomAlphanumeric(),
+            identifier: TestData.randomAlphanumeric(),
             content: notificationContent,
             trigger: nil
         )
@@ -96,7 +96,7 @@ final class AUNotificationServiceTests: XCTestCase {
         struct NetworkError: Error { }
 
         let expect = expectation(description: "Did receive notification")
-        let mediaURL = "https://\(AmplifyTest.randomAlphabet()).com/\(AmplifyTest.randomAlphanumeric()).png"
+        let mediaURL = "https://\(TestData.randomAlphabet()).com/\(TestData.randomAlphanumeric()).png"
 
         let notificationService = AUNotificationService()
         notificationService.loadDataFromURL = { url in
@@ -112,7 +112,7 @@ final class AUNotificationServiceTests: XCTestCase {
         ]
 
         let notificationRequest = UNNotificationRequest(
-            identifier: AmplifyTest.randomAlphanumeric(),
+            identifier: TestData.randomAlphanumeric(),
             content: notificationContent,
             trigger: nil
         )
@@ -129,12 +129,12 @@ final class AUNotificationServiceTests: XCTestCase {
         let notificationService = AUNotificationService()
         let notificationContent = UNMutableNotificationContent()
         notificationContent.userInfo = [:]
-        notificationContent.title = AmplifyTest.randomAlphanumeric()
-        notificationContent.subtitle = AmplifyTest.randomAlphanumeric(length: 16)
-        notificationContent.body = AmplifyTest.randomAlphanumeric(length: 64)
+        notificationContent.title = TestData.randomAlphanumeric()
+        notificationContent.subtitle = TestData.randomAlphanumeric(length: 16)
+        notificationContent.body = TestData.randomAlphanumeric(length: 64)
         notificationService.didReceive(
             UNNotificationRequest(
-                identifier: AmplifyTest.randomAlphanumeric(),
+                identifier: TestData.randomAlphanumeric(),
                 content: notificationContent,
                 trigger: nil
             )
