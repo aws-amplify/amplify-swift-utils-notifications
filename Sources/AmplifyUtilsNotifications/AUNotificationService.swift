@@ -21,6 +21,13 @@ open class AUNotificationService: UNNotificationServiceExtension {
     ///
     /// Default: PinpointNotificationPayload
     open var payloadSchema: AUNotificationPayload.Type = PinpointNotificationPayload.self
+
+    /// Function for retrieve data from remote URL.
+    ///
+    /// This is for testing only.
+    ///
+    /// Default: Data.init(contentsOf:options:)
+    var loadDataFromURL: (URL) throws -> Data = { try Data(contentsOf: $0) }
     
     var contentHandler: ((UNNotificationContent) -> Void)?
     var bestAttemptContent: UNMutableNotificationContent?
@@ -65,7 +72,7 @@ open class AUNotificationService: UNNotificationServiceExtension {
               let mediaURLString = payloadData.remoteImageURL,
               let mediaType = mediaURLString.split(separator: ".").last,
               let mediaURL = URL(string: mediaURLString),
-              let mediaData = try? Data(contentsOf: mediaURL) else {
+              let mediaData = try? self.loadDataFromURL(mediaURL) else {
             return nil
         }
         os_log(.debug, "got image data")
