@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
 
-  spec.name          = "AmplifyUntilsNotifications"
+  spec.name          = "AmplifyUtilsNotifications"
   spec.version       = "0.0.1"
   spec.summary       = "AWS Amplify Swift Utilities for Notifications."
 

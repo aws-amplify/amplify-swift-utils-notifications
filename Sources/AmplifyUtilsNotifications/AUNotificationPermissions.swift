@@ -16,6 +16,7 @@ import UIKit
 typealias Application = UIApplication
 #endif
 
+@available(iOSApplicationExtension, unavailable)
 /// Provides convenience methods for requesting and checking notifications permissions.
 public class AUNotificationPermissions {
     
