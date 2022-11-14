@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
 
   spec.name          = "AmplifyUtilsNotifications"
-  spec.version       = "0.0.1"
+  spec.version       = "0.0.2"
   spec.summary       = "AWS Amplify Swift Utilities for Notifications."
 
   spec.description   = "<<-DESC
@@ -11,7 +11,7 @@ Pod::Spec.new do |spec|
   The following features are provided:
     * Service extension to support fetching and attaching remote media to notifications
     * Convenience methods to support requesting notification permissions and registering with APNs
-                   DESC"
+  DESC"
 
   spec.homepage      = "https://github.com/aws-amplify/amplify-swift-utils-notifications"
   spec.license       = "Apache License, Version 2.0"
@@ -25,6 +25,6 @@ Pod::Spec.new do |spec|
 
   spec.source_files  = "Sources/AmplifyUtilsNotifications/**/*.swift"
 
-  spec.framework     = "UserNotifications"
+  # spec.framework     = "UserNotifications"
 
 end
