@@ -1,0 +1,36 @@
+platform :ios do
+    before_all do
+        setup_circle_ci
+    end
+
+    desc "Run all the tests on iOS"
+    lane :tests do
+        run_tests(
+            clean: true,
+            result_bundle: true,
+            scheme: "AmplifyUtilsNotifications",
+            package_path: ".",
+            sdk: "iphonesimulator",
+            device: "iPhone 14",
+        )
+    end
+end
+
+platform :mac do
+    before_all do
+        setup_circle_ci
+    end
+
+    desc "Run all the tests on macOS"
+    lane :tests do
+        run_tests(
+            clean: true,
+            result_bundle: true,
+            include_simulator_logs: false,
+            scheme: "AmplifyUtilsNotifications",
+            package_path: ".",
+            sdk: "macosx",
+            destination: "platform=macOS",
+        )
+    end
+end

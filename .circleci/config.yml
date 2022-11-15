@@ -4,18 +4,15 @@ version: 2.1
 
 orbs:
   macos: circleci/macos@2.3.3
+  ruby: circleci/ruby@2.0.0
 
 
 default-executor: &default-executor
   macos:
     xcode: 14.1.0
   working_directory: ~/circle-ci
-
-
-ios-simulator: &ios-simulator
-  version: "16.1"
-  platform: "iOS"
-  device: "iPhone 14"
+  environment:
+    FL_OUTPUT_DIR: output
 
 
 jobs:
@@ -24,26 +21,20 @@ jobs:
 
     steps:
       - checkout
-      - macos/preboot-simulator:
-          <<: *ios-simulator
+      - ruby/install-deps
       - run:
-          name: Build target on iOS
-          command: xcodebuild build -scheme 'AmplifyUtilsNotifications' -sdk iphonesimulator -destination "id=${MACOS_ORB_DEVICE_UDID}"
-      - run:
-          name: Run unit tests
-          command: xcodebuild test -scheme 'AmplifyUtilsNotifications' -sdk iphonesimulator -destination "id=${MACOS_ORB_DEVICE_UDID}"
+          name: Fastlane test
+          command: bundle exec fastlane ios tests
 
   build-test-macos:
     <<: *default-executor
 
     steps:
       - checkout
+      - ruby/install-deps
       - run:
-          name: Build target on macOS
-          command: xcodebuild build -scheme 'AmplifyUtilsNotifications' -sdk macosx -destination "platform=macOS"
-      - run:
-          name: Run unit tests
-          command: xcodebuild test -scheme 'AmplifyUtilsNotifications' -sdk macosx -destination "platform=macOS"
+          name: Fastlane test
+          command: bundle exec fastlane mac tests
 
 
 workflows:
