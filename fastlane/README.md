@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Run all the tests on iOS
 
+### ios release
+
+```sh
+[bundle exec] fastlane ios release
+```
+
+Publish to Cocoapods whenever a new version tag is created
+
 ----
 
 

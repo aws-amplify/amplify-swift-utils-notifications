@@ -36,11 +36,28 @@ jobs:
           name: Fastlane test
           command: bundle exec fastlane mac tests
 
+  release:
+    <<: *default-executor
+
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Publish new version to cocoapods trunk
+          command: bundle exec fastlane ios release
+
 
 workflows:
-  test-ios:
+  build-test-deploy:
     jobs:
       - build-test-ios
-  test-macos:
-    jobs:
       - build-test-macos
+      - release:
+          filters:
+            tags:
+              only: /^v.*/
+            branches:
+              ignore: /.*/
+          requires:
+            - build-test-ios
+            - build-test-macos
