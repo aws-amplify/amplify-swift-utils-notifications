@@ -1,3 +1,4 @@
+
 platform :ios do
     before_all do
         setup_circle_ci
@@ -13,6 +14,15 @@ platform :ios do
             sdk: "iphonesimulator",
             device: "iPhone 14",
         )
+    end
+
+    desc "Publish to Cocoapods whenever a new version tag is created"
+    lane :release do
+        # publish to Cocoapods
+        # pod_push(
+        #     use_bundle_exec: true,
+        #     path: "AmplifyUtilsNotifications.podspec",
+        # )
     end
 end
 
