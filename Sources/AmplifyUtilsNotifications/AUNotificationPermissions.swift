@@ -17,6 +17,10 @@ typealias Application = UIApplication
 #endif
 
 @available(iOSApplicationExtension, unavailable)
+@available(watchOSApplicationExtension, unavailable)
+@available(tvOSApplicationExtension, unavailable)
+@available(macCatalystApplicationExtension, unavailable)
+@available(OSXApplicationExtension, unavailable)
 /// Provides convenience methods for requesting and checking notifications permissions.
 public class AUNotificationPermissions {
     

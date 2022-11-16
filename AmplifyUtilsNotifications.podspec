@@ -25,6 +25,4 @@ Pod::Spec.new do |spec|
 
   spec.source_files  = "Sources/AmplifyUtilsNotifications/**/*.swift"
 
-  # spec.framework     = "UserNotifications"
-
 end
