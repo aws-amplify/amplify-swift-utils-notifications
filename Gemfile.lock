@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/aws-amplify/amplify-ci-support
+  revision: 8b34bda1805cf89fcdb6fa67038784109ac0100a
+  branch: main
+  glob: src/fastlane/release_actions/*.gemspec
+  specs:
+    fastlane-plugin-release_actions (1.1.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -279,6 +287,7 @@ PLATFORMS
 DEPENDENCIES
   cocoapods (~> 1.11.3)
   fastlane (~> 2.211)
+  fastlane-plugin-release_actions!
 
 BUNDLED WITH
    1.17.2

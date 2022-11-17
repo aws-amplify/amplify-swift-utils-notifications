@@ -54,10 +54,8 @@ workflows:
       - build-test-macos
       - release:
           filters:
-            tags:
-              only: /^v.*/
             branches:
-              ignore: /.*/
+              only: release
           requires:
             - build-test-ios
             - build-test-macos

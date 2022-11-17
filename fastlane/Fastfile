@@ -1,3 +1,5 @@
+PODSPEC_PATH = "AmplifyUtilsNotifications.podspec"
+CHANGELOG_PATH = "CHANGELOG.md"
 
 platform :ios do
     before_all do
@@ -18,11 +20,73 @@ platform :ios do
 
     desc "Publish to Cocoapods whenever a new version tag is created"
     lane :release do
-        # publish to Cocoapods
-        # pod_push(
-        #     use_bundle_exec: true,
-        #     path: "AmplifyUtilsNotifications.podspec",
-        # )
+        sh('git', 'config', '--global', 'user.email', ENV['GITHUB_EMAIL'])
+        sh('git', 'config', '--global', 'user.name', ENV['GITHUB_USER'])
+        next_version, commits = calculate_next_release_version
+
+        generate_version_bump_commit(version: next_version)
+        generate_changelog_commit(version: next_version, commits: commits)
+        create_new_version_tag(version: next_version)
+        # publish_to_cocoapod_trunk
+        # sync_up_main_release_branch
+    end
+
+    desc "Generate commit for version bump"
+    private_lane :generate_version_bump_commit do |options|
+        next_version = options[:version]
+        UI.user_error!("version shouldn't be nil") if next_version.nil?
+
+        version_bump_podspec(path: PODSPEC_PATH, version_number: next_version)
+        UI.message "Set version to: #{next_version}"
+        git_commit(path: PODSPEC_PATH, message: "chore: bump version to #{next_version} [skip ci]")
+    end
+
+    desc "Generate commit for changelog"
+    private_lane :generate_changelog_commit do |options|
+        next_version = options[:version]
+        UI.user_error!("version shouldn't be nil") if next_version.nil?
+
+        commits = options[:commits]
+        UI.user_error!("commits shouldn't be nil") if commits.nil?
+
+
+        changelog = build_changelog(version: next_version, commits: commits)
+        write_changelog(changelog: changelog, path: CHANGELOG_PATH)
+
+        git_commit(path: CHANGELOG_PATH, message: "changelog: update changelog for #{next_version} [skip ci]")
+    end
+
+    desc "Create new version tag after bump up version"
+    private_lane :create_new_version_tag do |options|
+        next_version = options[:version]
+        UI.user_error!("version shouldn't be nil") if next_version.nil?
+
+        add_git_tag(tag: "v#{next_version}", grouping: nil)
+    end
+
+    desc "Publish new version to cocoapod trunck"
+    private_lane :publish_to_cocoapod_trunk do
+        pod_push(
+            use_bundle_exec: true,
+            allow_warnings: true,
+            path: PODSPEC_PATH,
+        )
+    end
+
+    desc "Push commits and tags to remote branches"
+    private_lane :sync_up_main_release_branch do
+        push_to_git_remote(
+            local_branch: "release",
+            remote_branch: "release",
+            tags: true,
+        )
+
+        # update main branch with release branch
+        push_to_git_remote(
+            local_branch: "release",
+            remote_branch: "main",
+            tags: true,
+        )
     end
 end
 

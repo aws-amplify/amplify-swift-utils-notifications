@@ -21,7 +21,7 @@ Pod::Spec.new do |spec|
   spec.osx.deployment_target = "10.15"
   spec.swift_version = "5.6"
 
-  spec.source        = { :git => "https://github.com/aws-amplify/amplify-swift-utils-notifications.git", :tag => "#{spec.version}" }
+  spec.source        = { :git => "https://github.com/aws-amplify/amplify-swift-utils-notifications.git", :tag => "v#{spec.version}" }
 
   spec.source_files  = "Sources/AmplifyUtilsNotifications/**/*.swift"
 
