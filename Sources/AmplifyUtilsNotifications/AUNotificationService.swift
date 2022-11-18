@@ -53,6 +53,17 @@ open class AUNotificationService: UNNotificationServiceExtension {
             
             os_log(.debug, "created attachment")
             bestAttemptContent.attachments = [attachment]
+            
+            // To play default sound
+//            let defaultSound  = UNNotificationSound.default
+//            bestAttemptContent.sound = defaultSound
+            // -----OR------
+            // To play custom sound
+//            let customSound  = UNNotificationSound(named: UNNotificationSoundName(rawValue: "Hero.aiff"))
+//            bestAttemptContent.sound = customSound
+            if let customSound = getSoundAttachment(request) {
+                bestAttemptContent.sound = customSound
+            }
         }
     }
     
@@ -93,6 +104,49 @@ open class AUNotificationService: UNNotificationServiceExtension {
             try mediaData.write(to: fileURL)
             
             return try UNNotificationAttachment(identifier: imageFileIdentifier, url: fileURL)
+        } catch {
+            return nil
+        }
+    }
+    
+    private func getSoundAttachment(_ request: UNNotificationRequest) -> UNNotificationSound? {
+        guard let payloadData = try? payloadSchema.init(decoding: request.content.userInfo),
+              let mediaURLString = payloadData.remoteSoundURL,
+              let mediaType = mediaURLString.split(separator: ".").last,
+              let mediaURL = URL(string: mediaURLString),
+              let mediaData = try? self.loadDataFromURL(mediaURL) else {
+            return nil
+        }
+        
+        // supported sound types: aiff, wav, caf
+        guard ["aiff", "wav", "caf"].contains(mediaType) else { return nil }
+        
+        os_log(.debug, "got sound data")
+        
+        let fileManager = FileManager.default
+        let temporaryFolderName = ProcessInfo.processInfo.globallyUniqueString
+        let temporaryFolderURL = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent(temporaryFolderName, isDirectory: true)
+        
+        do {
+            try fileManager.createDirectory(at: temporaryFolderURL,
+                                            withIntermediateDirectories: true,
+                                            attributes: nil)
+            
+            let imageFileIdentifier = "\(UUID().uuidString).\(String(mediaType))"
+            let fileURL = temporaryFolderURL.appendingPathComponent(imageFileIdentifier)
+            try mediaData.write(to: fileURL)
+            
+//            let libraryURL = try URL(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+//            
+//                    let soundFolderURL = libraryURL.appendingPathComponent("Sounds", isDirectory: true)
+//                    if !fileExists(atPath: soundFolderURL.path) {
+//                        try createDirectory(at: soundFolderURL, withIntermediateDirectories: true)
+//                    }
+//                    return soundFolderURL.appendingPathComponent(filename, isDirectory: false)
+
+            
+            return UNNotificationSound(named: UNNotificationSoundName(fileURL.absoluteString))
         } catch {
             return nil
         }

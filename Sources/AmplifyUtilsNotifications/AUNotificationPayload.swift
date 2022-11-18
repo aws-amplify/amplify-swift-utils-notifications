@@ -14,6 +14,7 @@ import Foundation
 /// contains the remote image URL is sufficient. See `PinpointNotificationPayload` for an example.
 public protocol AUNotificationPayload: Decodable {
     var remoteImageURL: String? { get }
+    var remoteSoundURL: String? { get }
 }
 
 extension AUNotificationPayload {

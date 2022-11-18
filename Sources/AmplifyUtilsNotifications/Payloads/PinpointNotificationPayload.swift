@@ -8,6 +8,10 @@
 import Foundation
 
 struct PinpointNotificationPayload: AUNotificationPayload {
+    var remoteSoundURL: String? {
+        data.mediaURL
+    }
+    
     var remoteImageURL: String? {
         data.mediaURL
     }
