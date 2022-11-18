@@ -31,6 +31,26 @@ platform :ios do
         # sync_up_main_release_branch
     end
 
+    desc "Generate and publish documentaion for new version"
+    lane :publish_doc do
+        new_version = generate_doc
+        git_add(path: "docs/*")
+        git_commit(path: "docs/*", message: "chore: update API document for #{new_version} [skip ci]")
+        # push_to_git_remote(
+        #     local_branch: "release",
+        #     remote_branch: "gh-pages",
+        #     tags: true,
+        #     force: true,
+        # )
+    end
+
+    desc "Generate jazzy documentaion"
+    private_lane :generate_doc do
+        pod_version = version_get_podspec(path: PODSPEC_PATH)
+        jazzy(config: ".jazzy.yaml", module_version: pod_version)
+        pod_version
+    end
+
     desc "Generate commit for version bump"
     private_lane :generate_version_bump_commit do |options|
         next_version = options[:version]
@@ -38,6 +58,7 @@ platform :ios do
 
         version_bump_podspec(path: PODSPEC_PATH, version_number: next_version)
         UI.message "Set version to: #{next_version}"
+        git_add(path: PODSPEC_PATH)
         git_commit(path: PODSPEC_PATH, message: "chore: bump version to #{next_version} [skip ci]")
     end
 
@@ -52,7 +73,7 @@ platform :ios do
 
         changelog = build_changelog(version: next_version, commits: commits)
         write_changelog(changelog: changelog, path: CHANGELOG_PATH)
-
+        git_add(path: CHANGELOG_PATH)
         git_commit(path: CHANGELOG_PATH, message: "changelog: update changelog for #{next_version} [skip ci]")
     end
 
