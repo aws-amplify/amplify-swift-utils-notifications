@@ -49,10 +49,10 @@ open class AUNotificationService: UNNotificationServiceExtension {
         
         if let bestAttemptContent = bestAttemptContent {
             // Modify the notification content
-            guard let attachment = getImageAttachment(request) else { return }
+            guard let mediaAttachment = getMediaAttachment(request) else { return }
             
             os_log(.debug, "created attachment")
-            bestAttemptContent.attachments = [attachment]
+            bestAttemptContent.attachments = [mediaAttachment]
         }
     }
     
@@ -67,15 +67,15 @@ open class AUNotificationService: UNNotificationServiceExtension {
         }
     }
 
-    private func getImageAttachment(_ request: UNNotificationRequest) -> UNNotificationAttachment? {
+    private func getMediaAttachment(_ request: UNNotificationRequest) -> UNNotificationAttachment? {
         guard let payloadData = try? payloadSchema.init(decoding: request.content.userInfo),
-              let mediaURLString = payloadData.remoteImageURL,
+              let mediaURLString = payloadData.remoteMediaURL,
               let mediaType = mediaURLString.split(separator: ".").last,
               let mediaURL = URL(string: mediaURLString),
               let mediaData = try? self.loadDataFromURL(mediaURL) else {
             return nil
         }
-        os_log(.debug, "got image data")
+        os_log(.debug, "got media data")
         
         let fileManager = FileManager.default
         let temporaryFolderName = ProcessInfo.processInfo.globallyUniqueString
@@ -87,12 +87,11 @@ open class AUNotificationService: UNNotificationServiceExtension {
                                             withIntermediateDirectories: true,
                                             attributes: nil)
             
-            // supported image types: jpg, gif, png
-            let imageFileIdentifier = "\(UUID().uuidString).\(String(mediaType))"
-            let fileURL = temporaryFolderURL.appendingPathComponent(imageFileIdentifier)
+            let mediaFileIdentifier = "\(UUID().uuidString).\(String(mediaType))"
+            let fileURL = temporaryFolderURL.appendingPathComponent(mediaFileIdentifier)
             try mediaData.write(to: fileURL)
             
-            return try UNNotificationAttachment(identifier: imageFileIdentifier, url: fileURL)
+            return try UNNotificationAttachment(identifier: mediaFileIdentifier, url: fileURL)
         } catch {
             return nil
         }
