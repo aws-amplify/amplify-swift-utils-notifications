@@ -8,9 +8,9 @@
 import UserNotifications
 import os.log
 
-/// Attaches an image to a remote notification before it’s delivered to the user.
+/// Attaches a media (image, sound, or video) item to a remote notification before it’s delivered to the user.
 ///
-/// The image will be downloaded from a URL specified in the incoming notification. The
+/// The media will be downloaded from a URL specified in the incoming notification. The
 /// format of the notification payload and name of the field containing the image URL is
 /// specified in payloadSchema, which conforms to AUNotificationPayload.
 open class AUNotificationService: UNNotificationServiceExtension {
@@ -20,7 +20,7 @@ open class AUNotificationService: UNNotificationServiceExtension {
     /// You can override the default value in the initializer of a child class.
     ///
     /// Default: PinpointNotificationPayload
-    open var payloadSchema: AUNotificationPayload.Type = PinpointNotificationPayload.self
+    public var payloadSchema: AUNotificationPayload.Type = PinpointNotificationPayload.self
 
     /// Function for retrieve data from remote URL.
     ///
@@ -29,8 +29,11 @@ open class AUNotificationService: UNNotificationServiceExtension {
     /// Default: Data.init(contentsOf:options:)
     var loadDataFromURL: (URL) throws -> Data = { try Data(contentsOf: $0) }
     
-    var contentHandler: ((UNNotificationContent) -> Void)?
-    var bestAttemptContent: UNMutableNotificationContent?
+    /// The content handler for the notification.
+    public var contentHandler: ((UNNotificationContent) -> Void)?
+    
+    /// The content for the notification.
+    public var bestAttemptContent: UNMutableNotificationContent?
     
     /// Called when in incomming notification is received. Allows modification of the notification request before delivery.
     /// - Parameters:
