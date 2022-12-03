@@ -30,17 +30,16 @@ This package requires Xcode 13.4 or higher to build.
 
 ### Swift Package Manager
 1. Swift Package Manager is distributed with Xcode. To start adding this package to your iOS project, open your project in Xcode and select **File > Add Packages**.
-    - TODO: Add screenshot here
+    ![add-packages](./readme-images/add-packages.png)
 
 2. Enter the package GitHub repo URL (https://github.com/aws-amplify/amplify-swift-utils-notifications) into the search bar.
 
 3. You'll see the repository rules for which version you want Swift Package Manager to install. Choose **Up to Next Major Version** and enter **1.0.0** as the minimum version for the Dependency Rule, then click **Add Package**.
-    - TODO: Add screenshot here
+    ![amplify-swift-utils-notifications](./readme-images/amplify-swift-utils-notifications.png)
 
 4. Select `AmplifyUtilsNotifications`, then click Add Package.
-    - TODO: Add screenshot here
 
-5. In your app code, explicitly import the plugin when you needed.
+5. In your app code, explicitly import the plugin as needed.
 
     ```swift
     import SwiftUI
@@ -85,6 +84,86 @@ This package requires Xcode 13.4 or higher to build.
     ```
 
 4. Open up *.xcworkspace with Xcode, and you will be able to use the `AmplifyUtilsNotifications` package in your project.
+
+## Notification Service Extension for AWS Pinpoint
+
+This package includes a ready to use implementation(`AUNotificationService`) for handling remote notifications sent by AWS Pinpoint. It helps with decoding notification json data and retrieving the remote media url as an attachment.
+
+#### Push notification in AWS Pinpoint format
+1. Add a Service App Extension to Your Project. [Apple Doc](https://developer.apple.com/documentation/usernotifications/modifying_content_in_newly_delivered_notifications).
+
+    ![add-notification-service-extension](./readme-images/add-notification-service-extension.png)
+
+2. Update `info.plist` of the newly created Notification Service Extension.
+
+    ```xml
+    <dict>
+        <key>NSExtension</key>
+        <dict>
+            <key>NSExtensionPointIdentifier</key>
+            <string>com.apple.usernotifications.service</string>
+            <key>NSExtensionPrincipalClass</key>
+            <string>AmplifyUtilsNotifications.AUNotificationService</string>
+        </dict>
+    </dict>
+    ```
+
+    > Note:
+    >
+    > We suggest you either keep the auto generated `NotificationService.swift` source file or add an empty swift file for your Notification Service Extension target. An empty source list will cause an error when you try to install the extension to a real device.
+
+### Push notification not in AWS Pinpoint format
+
+You can also subclass `AUNotificationService` to support a different notification payload format or add custom functionality.
+
+For example, we want to send the push notification with a field name `video_url`.
+
+1. Define a `MyPayload` struct that conforms to the `AUNotificationPayload` protocol. It defines the `remoteMediaURL`.
+
+2. Subclass `AUNotificationService` and change the `payloadSchema` property to `MyPayload` that was defined in the previous step.
+
+    ```swift
+    import AmplifyUtilsNotifications
+
+    struct MyPayload: AUNotificationPayload {
+        var remoteMediaURL: String? {
+            video_url
+        }
+
+        let video_url: String
+    }
+
+    class NotificationService: AUNotificationService {
+
+        override init() {
+            super.init()
+            self.payloadSchema = MyPayload.self
+        }
+    }
+    ```
+
+3. Update the `info.plist` by setting `NSExtensionPrincipalClass` to `$(PRODUCT_MODULE_NAME).NotificationService`.
+
+You can also override the `didReceive` function to modify the content as desired. For example, attach suffix `[MODIFIED]` to your notification title.
+
+```swift
+override func didReceive(
+    _ request: UNNotificationRequest,
+    withContentHandler contentHandler: @escaping (UNNotificationContent) -> Void
+) {
+    super.didReceive(request) { content in
+        self.contentHandler = contentHandler
+        let mutableContent = content.mutableCopy() as? UNMutableNotificationContent
+        mutableContent?.title = content.title + "[MODIFIED]"
+        if let mutableContent {
+            contentHandler(mutableContent)
+        }
+    }
+}
+```
+
+
+
 
 ## Reporting Bugs/Feature Requests
 

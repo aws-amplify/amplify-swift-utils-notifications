@@ -48,6 +48,9 @@ platform :ios do
     private_lane :generate_doc do
         pod_version = version_get_podspec(path: PODSPEC_PATH)
         jazzy(config: ".jazzy.yaml", module_version: pod_version)
+        Dir.chdir('..') do
+            sh('ln', '-s', '../readme-images', 'docs')
+        end
         pod_version
     end
 
