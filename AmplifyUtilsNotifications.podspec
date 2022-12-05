@@ -6,7 +6,7 @@ Pod::Spec.new do |spec|
 
   spec.description   = "<<-DESC
   Amplify Swift Utilities for Notifications provides helpful functionality for working with push notifications on iOS and macOS.
-  Although it was developed for use with AWS Amplify, it can also be used indepdendently.
+  Although it was developed for use with AWS Amplify, it can also be used independently.
 
   The following features are provided:
     * Service extension to support fetching and attaching remote media to notifications

@@ -46,6 +46,16 @@ jobs:
           name: Publish new version to cocoapods trunk
           command: bundle exec fastlane ios release
 
+  publish-doc:
+    <<: *default-executor
+
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Publish documention for new version
+          command: bundle exec fastlane ios publish_doc
+
 
 workflows:
   build-test-deploy:
@@ -59,3 +69,9 @@ workflows:
           requires:
             - build-test-ios
             - build-test-macos
+      - publish-doc:
+          filters:
+            branches:
+              only: release
+          requires:
+            - release

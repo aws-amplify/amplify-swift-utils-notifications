@@ -31,6 +31,14 @@ Run all the tests on iOS
 
 Publish to Cocoapods whenever a new version tag is created
 
+### ios publish_doc
+
+```sh
+[bundle exec] fastlane ios publish_doc
+```
+
+Generate and publish documentaion for new version
+
 ----
 
 
