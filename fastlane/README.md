@@ -23,6 +23,14 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 Run all the tests on iOS
 
+### ios integration_tests
+
+```sh
+[bundle exec] fastlane ios integration_tests
+```
+
+Run integration test on iOS simulator
+
 ### ios release
 
 ```sh
