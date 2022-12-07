@@ -18,6 +18,18 @@ platform :ios do
         )
     end
 
+    desc "Run integration test on iOS simulator"
+    lane :integration_tests do
+        run_tests(
+            clean: true,
+            include_simulator_logs: false,
+            project: "./IntegrationTestApp/IntegrationTestApp.xcodeproj",
+            scheme: "IntegrationTestApp",
+            sdk: "iphonesimulator",
+            device: "iPhone 14",
+        )
+    end
+
     desc "Publish to Cocoapods whenever a new version tag is created"
     lane :release do
         sh('git', 'config', '--global', 'user.email', ENV['GITHUB_EMAIL'])
