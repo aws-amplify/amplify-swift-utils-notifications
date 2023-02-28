@@ -46,4 +46,9 @@ public class AUNotificationPermissions {
         
         return notificationsAllowed
     }
+    
+    /// Register device with APNs
+    public static func registerWithAPNs() async {
+        await Application.shared.registerForRemoteNotifications()
+    }
 }
