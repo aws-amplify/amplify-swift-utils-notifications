@@ -48,7 +48,9 @@ public class AUNotificationPermissions {
     }
     
     /// Register device with APNs
-    public static func registerWithAPNs() async {
-        await Application.shared.registerForRemoteNotifications()
+    public static func registerForRemoteNotifications() async {
+        await MainActor.run {
+            Application.shared.registerForRemoteNotifications()
+        }
     }
 }
