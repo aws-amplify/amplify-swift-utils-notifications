@@ -44,11 +44,6 @@ public class AUNotificationPermissions {
             options: options
         )
         
-        if notificationsAllowed {
-            // Register with Apple Push Notification service
-            await Application.shared.registerForRemoteNotifications()
-        }
-        
         return notificationsAllowed
     }
 }
