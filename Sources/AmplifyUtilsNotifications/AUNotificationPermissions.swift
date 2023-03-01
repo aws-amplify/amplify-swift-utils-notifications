@@ -44,11 +44,13 @@ public class AUNotificationPermissions {
             options: options
         )
         
-        if notificationsAllowed {
-            // Register with Apple Push Notification service
-            await Application.shared.registerForRemoteNotifications()
-        }
-        
         return notificationsAllowed
+    }
+    
+    /// Register device with APNs
+    public static func registerForRemoteNotifications() async {
+        await MainActor.run {
+            Application.shared.registerForRemoteNotifications()
+        }
     }
 }
