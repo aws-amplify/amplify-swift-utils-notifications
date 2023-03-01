@@ -1,0 +1,19 @@
+name: Release new version
+
+on:
+  workflow_dispatch
+
+permissions:
+  pull-requests: write
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+      - name: Create PR to push main to release branch
+        env:
+          GITHUB_TOKEN: ${{ secret.GITHUB_TOKEN }}
+        run: "gh pr create --title 'chore: kickoff release' --body 'kickoff release' --head main --base release"
