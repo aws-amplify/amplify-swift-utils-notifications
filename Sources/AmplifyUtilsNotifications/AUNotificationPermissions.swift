@@ -27,9 +27,16 @@ public class AUNotificationPermissions {
     /// Check if notifications are allowed
     public static var allowed: Bool {
         get async {
+            await status == .authorized ? true : false
+        }
+    }
+    
+    /// Check the notification permission status
+    public static var status: UNAuthorizationStatus {
+        get async {
             await withCheckedContinuation { continuation in
                 UNUserNotificationCenter.current().getNotificationSettings { settings in
-                    continuation.resume(returning: settings.authorizationStatus == .authorized ? true : false)
+                    continuation.resume(returning: settings.authorizationStatus)
                 }
             }
         }
@@ -44,11 +51,13 @@ public class AUNotificationPermissions {
             options: options
         )
         
-        if notificationsAllowed {
-            // Register with Apple Push Notification service
-            await Application.shared.registerForRemoteNotifications()
-        }
-        
         return notificationsAllowed
+    }
+    
+    /// Register device with APNs
+    public static func registerForRemoteNotifications() async {
+        await MainActor.run {
+            Application.shared.registerForRemoteNotifications()
+        }
     }
 }
