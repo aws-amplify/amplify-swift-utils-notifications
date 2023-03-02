@@ -39,8 +39,8 @@ platform :ios do
         generate_version_bump_commit(version: next_version)
         generate_changelog_commit(version: next_version, commits: commits)
         create_new_version_tag(version: next_version)
-        # publish_to_cocoapod_trunk
-        # sync_up_main_release_branch
+        publish_to_cocoapod_trunk
+        sync_up_main_release_branch
     end
 
     desc "Generate and publish documentaion for new version"
@@ -48,12 +48,12 @@ platform :ios do
         new_version = generate_doc
         git_add(path: "docs/*")
         git_commit(path: "docs/*", message: "chore: update API document for #{new_version} [skip ci]")
-        # push_to_git_remote(
-        #     local_branch: "release",
-        #     remote_branch: "gh-pages",
-        #     tags: true,
-        #     force: true,
-        # )
+        push_to_git_remote(
+            local_branch: "release",
+            remote_branch: "gh-pages",
+            tags: true,
+            force: true,
+        )
     end
 
     desc "Generate jazzy documentaion"
@@ -97,7 +97,7 @@ platform :ios do
         next_version = options[:version]
         UI.user_error!("version shouldn't be nil") if next_version.nil?
 
-        add_git_tag(tag: "v#{next_version}", grouping: nil)
+        add_git_tag(tag: next_version, grouping: nil)
     end
 
     desc "Publish new version to cocoapod trunck"
