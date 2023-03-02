@@ -97,7 +97,8 @@ platform :ios do
         next_version = options[:version]
         UI.user_error!("version shouldn't be nil") if next_version.nil?
 
-        add_git_tag(tag: next_version, grouping: nil)
+        add_git_tag(tag: next_version, grouping: nil, force: true)
+        push_git_tags(tag: next_version, force: true)
     end
 
     desc "Publish new version to cocoapod trunck"
@@ -114,14 +115,12 @@ platform :ios do
         push_to_git_remote(
             local_branch: "release",
             remote_branch: "release",
-            tags: true,
         )
 
         # update main branch with release branch
         push_to_git_remote(
             local_branch: "release",
             remote_branch: "main",
-            tags: true,
         )
     end
 end
