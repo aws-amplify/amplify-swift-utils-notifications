@@ -45,7 +45,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "5a:23:0e:1d:98:0c:04:dc:73:06:5f:c3:19:72:e2:93"
+            - "1d:f2:37:1e:7e:38:02:e0:76:2d:6a:a8:47:2e:85:09"
       - checkout
       - ruby/install-deps
       - run:
@@ -58,7 +58,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "5a:23:0e:1d:98:0c:04:dc:73:06:5f:c3:19:72:e2:93"
+            - "1d:f2:37:1e:7e:38:02:e0:76:2d:6a:a8:47:2e:85:09"
       - checkout
       - ruby/install-deps
       - run:
