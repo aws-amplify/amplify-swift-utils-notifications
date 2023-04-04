@@ -8,7 +8,9 @@
 import Foundation
 import UserNotifications
 
-#if canImport(AppKit)
+#if canImport(WatchKit)
+import WatchKit
+#elseif canImport(AppKit)
 import AppKit
 typealias Application = NSApplication
 #elseif canImport(UIKit)
@@ -57,7 +59,11 @@ public class AUNotificationPermissions {
     /// Register device with APNs
     public static func registerForRemoteNotifications() async {
         await MainActor.run {
+            #if canImport(WatchKit)
+            WKExtension.shared().registerForRemoteNotifications()
+            #else
             Application.shared.registerForRemoteNotifications()
+            #endif
         }
     }
 }
