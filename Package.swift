@@ -5,7 +5,11 @@ import PackageDescription
 
 let package = Package(
     name: "AmplifyUtilsNotifications",
-    platforms: [.iOS(.v13), .macOS(.v10_15)],
+    platforms: [
+        .iOS(.v13),
+        .macOS(.v10_15),
+        .watchOS(.v6)
+    ],
     products: [
         .library(
             name: "AmplifyUtilsNotifications",
