@@ -60,7 +60,7 @@ public class AUNotificationPermissions {
     public static func registerForRemoteNotifications() async {
         await MainActor.run {
             #if canImport(WatchKit)
-            WKExtension.shared().registerForRemoteNotifications()
+            WKApplication.shared().registerForRemoteNotifications()
             #else
             Application.shared.registerForRemoteNotifications()
             #endif
