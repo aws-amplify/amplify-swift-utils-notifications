@@ -5,6 +5,8 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+#if !os(tvOS)
+
 import XCTest
 @testable import AmplifyUtilsNotifications
 @testable import UserNotifications
@@ -149,3 +151,5 @@ final class AUNotificationServiceTests: XCTestCase {
         waitForExpectations(timeout: 1)
     }
 }
+
+#endif
