@@ -5,7 +5,7 @@ version: 2.1
 orbs:
   macos: circleci/macos@2.3.3
   ruby: circleci/ruby@2.0.0
-
+  aws-cli: circleci/aws-cli@3.1.4
 
 default-executor: &default-executor
   macos:
@@ -13,7 +13,6 @@ default-executor: &default-executor
   working_directory: ~/circle-ci
   environment:
     FL_OUTPUT_DIR: output
-
 
 jobs:
   build-test-ios:
@@ -48,6 +47,10 @@ jobs:
             - "1d:f2:37:1e:7e:38:02:e0:76:2d:6a:a8:47:2e:85:09"
       - checkout
       - ruby/install-deps
+      - aws-cli/setup:
+          role-arn: $AWS_OIDC_ROLE_ARN
+          role-session-name: "${CIRCLE_WORKFLOW_JOB_ID}.release"
+          session-duration: '900'
       - run:
           name: Publish new version to cocoapods trunk
           command: bundle exec fastlane ios release
@@ -78,6 +81,8 @@ workflows:
           requires:
             - build-test-ios
             - build-test-macos
+          context: amplify-swift-aws-oidc
+
       - publish-doc:
           filters:
             branches:
