@@ -5,7 +5,7 @@ version: 2.1
 orbs:
   macos: circleci/macos@2.3.3
   ruby: circleci/ruby@2.0.0
-
+  aws-cli: circleci/aws-cli@3.1.4
 
 default-executor: &default-executor
   macos:
@@ -13,7 +13,6 @@ default-executor: &default-executor
   working_directory: ~/circle-ci
   environment:
     FL_OUTPUT_DIR: output
-
 
 jobs:
   build-test-ios:
@@ -39,15 +38,39 @@ jobs:
           name: Unit tests
           command: bundle exec fastlane mac tests
 
+  build-test-tvos:
+    <<: *default-executor
+
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Unit tests
+          command: bundle exec fastlane tvos tests
+
+  build-test-watchos:
+    <<: *default-executor
+
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Unit tests
+          command: bundle exec fastlane watchos tests
+
   release:
     <<: *default-executor
 
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "5a:23:0e:1d:98:0c:04:dc:73:06:5f:c3:19:72:e2:93"
+            - "1d:f2:37:1e:7e:38:02:e0:76:2d:6a:a8:47:2e:85:09"
       - checkout
       - ruby/install-deps
+      - aws-cli/setup:
+          role-arn: $AWS_OIDC_ROLE_ARN
+          role-session-name: "${CIRCLE_WORKFLOW_JOB_ID}.release"
+          session-duration: '900'
       - run:
           name: Publish new version to cocoapods trunk
           command: bundle exec fastlane ios release
@@ -58,7 +81,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "5a:23:0e:1d:98:0c:04:dc:73:06:5f:c3:19:72:e2:93"
+            - "1d:f2:37:1e:7e:38:02:e0:76:2d:6a:a8:47:2e:85:09"
       - checkout
       - ruby/install-deps
       - run:
@@ -71,6 +94,8 @@ workflows:
     jobs:
       - build-test-ios
       - build-test-macos
+      - build-test-tvos
+      - build-test-watchos
       - release:
           filters:
             branches:
@@ -78,6 +103,10 @@ workflows:
           requires:
             - build-test-ios
             - build-test-macos
+            - build-test-tvos
+            - build-test-watchos
+          context: amplify-swift-aws-oidc
+
       - publish-doc:
           filters:
             branches:

@@ -1,3 +1,5 @@
+require 'json'
+
 PODSPEC_PATH = "AmplifyUtilsNotifications.podspec"
 CHANGELOG_PATH = "CHANGELOG.md"
 
@@ -103,6 +105,15 @@ platform :ios do
 
     desc "Publish new version to cocoapod trunck"
     private_lane :publish_to_cocoapod_trunk do
+        # Define `COCOAPODS_TRUNK_TOKEN` env var for trunk authentication
+        # https://github.com/CocoaPods/cocoapods-trunk/commit/9e6ec1c1faf96fa837dc2ed70b5f54006b181ed6
+        secret = sh(
+            command: 'aws secretsmanager get-secret-value --secret-id ${COCOAPODS_SECRET_ARN}',
+            log: false
+        )
+
+        ENV['COCOAPODS_TRUNK_TOKEN'] = JSON.parse(secret)["SecretString"]
+
         pod_push(
             use_bundle_exec: true,
             allow_warnings: true,
@@ -140,6 +151,44 @@ platform :mac do
             package_path: ".",
             sdk: "macosx",
             destination: "platform=macOS",
+        )
+    end
+end
+
+platform :tvos do
+    before_all do
+        setup_circle_ci
+    end
+
+    desc "Run all the tests on tvOS"
+    lane :tests do
+        run_tests(
+            clean: true,
+            result_bundle: true,
+            include_simulator_logs: false,
+            scheme: "AmplifyUtilsNotifications",
+            package_path: ".",
+            sdk: "appletvsimulator",
+            destination: "platform=tvOS Simulator,name=Apple TV 4K (3rd generation),OS=latest",
+        )
+    end
+end
+
+platform :watchos do
+    before_all do
+        setup_circle_ci
+    end
+
+    desc "Run all the tests on watchOS"
+    lane :tests do
+        run_tests(
+            clean: true,
+            result_bundle: true,
+            include_simulator_logs: false,
+            scheme: "AmplifyUtilsNotifications",
+            package_path: ".",
+            sdk: "watchsimulator",
+            destination: "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm),OS=latest",
         )
     end
 end

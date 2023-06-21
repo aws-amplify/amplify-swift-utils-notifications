@@ -5,6 +5,8 @@
 // SPDX-License-Identifier: Apache-2.0
 //
 
+#if !os(tvOS)
+
 import UserNotifications
 import os.log
 
@@ -100,3 +102,5 @@ open class AUNotificationService: UNNotificationServiceExtension {
         }
     }
 }
+
+#endif
