@@ -154,3 +154,41 @@ platform :mac do
         )
     end
 end
+
+platform :tvos do
+    before_all do
+        setup_circle_ci
+    end
+
+    desc "Run all the tests on tvOS"
+    lane :tests do
+        run_tests(
+            clean: true,
+            result_bundle: true,
+            include_simulator_logs: false,
+            scheme: "AmplifyUtilsNotifications",
+            package_path: ".",
+            sdk: "appletvsimulator",
+            destination: "platform=tvOS Simulator,name=Apple TV 4K (3rd generation),OS=latest",
+        )
+    end
+end
+
+platform :watchos do
+    before_all do
+        setup_circle_ci
+    end
+
+    desc "Run all the tests on watchOS"
+    lane :tests do
+        run_tests(
+            clean: true,
+            result_bundle: true,
+            include_simulator_logs: false,
+            scheme: "AmplifyUtilsNotifications",
+            package_path: ".",
+            sdk: "watchsimulator",
+            destination: "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm),OS=latest",
+        )
+    end
+end

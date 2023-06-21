@@ -38,6 +38,26 @@ jobs:
           name: Unit tests
           command: bundle exec fastlane mac tests
 
+  build-test-tvos:
+    <<: *default-executor
+
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Unit tests
+          command: bundle exec fastlane tvos tests
+
+  build-test-watchos:
+    <<: *default-executor
+
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Unit tests
+          command: bundle exec fastlane watchos tests
+
   release:
     <<: *default-executor
 
@@ -74,6 +94,8 @@ workflows:
     jobs:
       - build-test-ios
       - build-test-macos
+      - build-test-tvos
+      - build-test-watchos
       - release:
           filters:
             branches:
@@ -81,6 +103,8 @@ workflows:
           requires:
             - build-test-ios
             - build-test-macos
+            - build-test-tvos
+            - build-test-watchos
           context: amplify-swift-aws-oidc
 
       - publish-doc:
