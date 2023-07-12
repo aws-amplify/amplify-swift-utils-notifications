@@ -1,0 +1,29 @@
+# Sample workflow to access AWS resources when workflow is tied to branch
+# The workflow Creates static website using aws s3
+name: Release job
+on:
+  push:
+    branches:
+        - dev/github_actions
+
+permissions:
+      id-token: write
+      contents: read
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+
+      - name: configure aws credentials
+        env:
+          AWS_REGION : ${{ secrets.AWS_REGION }}
+        uses: aws-actions/configure-aws-credentials@5fd3084fc36e372ff1fff382a39b10d03659f355 #v2
+        with:
+          role-to-assume: arn:aws:iam::123456123456:oidc-provider/token.actions.githubusercontent.com
+          role-session-name: githubtokenession
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name:  Publish new version to cocoapods trunk
+        run: fastlane ios release
