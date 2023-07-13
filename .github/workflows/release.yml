@@ -1,0 +1,44 @@
+name: Release new version
+on:
+  push:
+    branches:
+      - release
+
+permissions:
+      id-token: write
+      contents: write
+jobs:
+  build-and-test:
+    uses: ./.github/workflows/build-and-test.yml
+
+  release:
+    needs: [build-and-test]
+    runs-on: macos-latest
+    steps: 
+      - name: Checkout repo
+        uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
+        with:
+          fetch-depth: 10
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@250fcd6a742febb1123a77a841497ccaa8b9e939 # v1.152.0
+        with:
+          ruby-version: '3.2.1'
+          bundler-cache: true
+
+      - name: Fetch tags
+        run: git fetch --tags origin
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@5fd3084fc36e372ff1fff382a39b10d03659f355 #v2
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          role-session-name: ${{ secrets.AWS_ROLE_SESSION_NAME }}
+          aws-region: ${{ secrets.AWS_REGION }}
+
+      - name:  Publish new version to cocoapods trunk
+        env:
+          COCOAPODS_SECRET_ARN: ${{ secrets.COCOAPODS_SECRET_ARN }}
+          GITHUB_EMAIL: ${{ secrets.OPS_EMAIL }}
+          GITHUB_USER: ${{ secrets.OPS_USER }}
+        run: bundle exec fastlane ios release
