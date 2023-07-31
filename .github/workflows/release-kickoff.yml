@@ -1,4 +1,4 @@
-name: Release new version
+name: Kick off new release
 
 on:
   workflow_dispatch
