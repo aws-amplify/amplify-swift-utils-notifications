@@ -4,10 +4,6 @@ PODSPEC_PATH = "AmplifyUtilsNotifications.podspec"
 CHANGELOG_PATH = "CHANGELOG.md"
 
 platform :ios do
-    before_all do
-        setup_circle_ci
-    end
-
     desc "Run all the tests on iOS"
     lane :tests do
         run_tests(
@@ -137,10 +133,6 @@ platform :ios do
 end
 
 platform :mac do
-    before_all do
-        setup_circle_ci
-    end
-
     desc "Run all the tests on macOS"
     lane :tests do
         run_tests(
@@ -156,10 +148,6 @@ platform :mac do
 end
 
 platform :tvos do
-    before_all do
-        setup_circle_ci
-    end
-
     desc "Run all the tests on tvOS"
     lane :tests do
         run_tests(
@@ -175,10 +163,6 @@ platform :tvos do
 end
 
 platform :watchos do
-    before_all do
-        setup_circle_ci
-    end
-
     desc "Run all the tests on watchOS"
     lane :tests do
         run_tests(
