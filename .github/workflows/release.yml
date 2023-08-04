@@ -54,3 +54,6 @@ jobs:
           GITHUB_EMAIL: aws-amplify-ops@amazon.com
           GITHUB_USER: aws-amplify-ops
         run: bundle exec fastlane ios release
+
+      - name: Publish documentation
+        run: bundle exec fastlane ios publish_doc
