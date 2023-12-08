@@ -10,12 +10,12 @@ import UserNotifications
 
 #if canImport(WatchKit)
 import WatchKit
-#elseif canImport(AppKit)
-import AppKit
-typealias Application = NSApplication
 #elseif canImport(UIKit)
 import UIKit
 typealias Application = UIApplication
+#elseif canImport(AppKit)
+import AppKit
+typealias Application = NSApplication
 #endif
 
 @available(iOSApplicationExtension, unavailable)
