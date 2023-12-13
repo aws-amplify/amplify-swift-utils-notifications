@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.1 (2023-12-13)
+
+### Bug Fixes
+
+- supports mac catalyst (#40)
+
 ## 1.1.0 (2023-06-21)
 
 ### Features
