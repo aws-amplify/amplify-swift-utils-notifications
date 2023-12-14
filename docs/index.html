@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>AmplifyUtilsNotifications  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a title="AmplifyUtilsNotifications  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">AmplifyUtilsNotifications 1.1.1 Docs</a></p>
+        <p class="header-right"><a href="https://github.com/aws-amplify/amplify-swift-utils-notifications"><img src="img/gh.png" alt="GitHub"/>View on GitHub</a></p>
+        <div class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">AmplifyUtilsNotifications Reference</a>
+        <img id="carat" src="img/carat.png" alt=""/>
+        AmplifyUtilsNotifications  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Classes.html">Classes</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Classes/AUNotificationPermissions.html">AUNotificationPermissions</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Classes/AUNotificationService.html">AUNotificationService</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
+            <a href="Protocols.html">Protocols</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Protocols/AUNotificationPayload.html">AUNotificationPayload</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h2 id='amplify-swift-utilities-for-notifications' class='heading'>Amplify Swift Utilities for Notifications</h2>
+
+<p>Amplify Swift Utilities for Notifications provides helpful functionality for working with push notifications on iOS and macOS.</p>
+
+<p>Although it was developed for use with AWS Amplify, it can also be used independently.</p>
+
+<p><a href="https://aws-amplify.github.io/amplify-swift-utils-notifications/docs/">API Documentation</a></p>
+<h2 id='features' class='heading'>Features</h2>
+
+<ul>
+<li>Convenience methods to support requesting notification permissions and registering with APNs</li>
+<li>Push Notification Service extension to support fetching and attaching remote media to notifications</li>
+</ul>
+<h2 id='platform-support' class='heading'>Platform Support</h2>
+
+<p>Amplify Swift Utilities for Notifications package supports iOS 13+ and macOS 10.15+.</p>
+<h2 id='license' class='heading'>License</h2>
+
+<p>This package is licensed under the Apache-2.0 License.</p>
+<h2 id='installation' class='heading'>Installation</h2>
+
+<p>This package requires Xcode 13.4 or higher to build.</p>
+<h3 id='swift-package-manager' class='heading'>Swift Package Manager</h3>
+
+<ol>
+<li><p>Swift Package Manager is distributed with Xcode. To start adding this package to your iOS project, open your project in Xcode and select <strong>File &gt; Add Packages</strong>.
+<img src="./readme-images/add-packages.png" alt="add-packages"></p></li>
+<li><p>Enter the package GitHub repo URL (<a href="https://github.com/aws-amplify/amplify-swift-utils-notifications">https://github.com/aws-amplify/amplify-swift-utils-notifications</a>) into the search bar.</p></li>
+<li><p>You&rsquo;ll see the repository rules for which version you want Swift Package Manager to install. Choose <strong>Up to Next Major Version</strong> and enter <strong>1.0.0</strong> as the minimum version for the Dependency Rule, then click <strong>Add Package</strong>.
+<img src="./readme-images/amplify-swift-utils-notifications.png" alt="amplify-swift-utils-notifications"></p></li>
+<li><p>Select <code>AmplifyUtilsNotifications</code>, then click Add Package.</p></li>
+<li><p>In your app code, explicitly import the plugin as needed.</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">SwiftUI</span>
+<span class="kd">import</span> <span class="kt">AmplifyUtilsNotifications</span>
+
+<span class="kd">@main</span>
+<span class="kd">struct</span> <span class="kt">HelloWorldApp</span><span class="p">:</span> <span class="kt">App</span> <span class="p">{</span>
+    <span class="kd">@UIApplicationDelegateAdaptor</span><span class="p">(</span><span class="kt">AppDelegate</span><span class="o">.</span><span class="k">self</span><span class="p">)</span> <span class="k">var</span> <span class="nv">appDelegate</span>
+    <span class="k">var</span> <span class="nv">body</span><span class="p">:</span> <span class="kd">some</span> <span class="kt">Scene</span> <span class="p">{</span>
+        <span class="kt">WindowGroup</span> <span class="p">{</span>
+            <span class="kt">ContentView</span><span class="p">()</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">AppDelegate</span><span class="p">:</span> <span class="kt">NSObject</span><span class="p">,</span> <span class="kt">UIApplicationDelegate</span> <span class="p">{</span>
+    <span class="kd">func</span> <span class="nf">applicationDidFinishLaunching</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">Task</span> <span class="p">{</span>
+            <span class="k">let</span> <span class="nv">isPushNotificationAllowed</span> <span class="o">=</span> <span class="k">await</span> <span class="kt">AmplifyUtilsNotifications</span><span class="o">.</span><span class="kt">AUNotificationPermissions</span><span class="o">.</span><span class="n">allowed</span>
+            <span class="c1">// ...</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></li>
+</ol>
+<h3 id='cocoapods' class='heading'>Cocoapods</h3>
+
+<ol>
+<li><p>This package is also available through <a href="https://cocoapods.org/">CocoaPods</a>. If you have not installed CocoaPods, follow the instructions <a href="https://guides.cocoapods.org/using/getting-started.html#getting-started">here</a>.</p></li>
+<li><p>Add the package as a dependency to your Podfile.</p>
+<pre class="highlight ruby"><code><span class="n">platform</span> <span class="ss">:ios</span><span class="p">,</span> <span class="s1">'13.0'</span>
+<span class="n">use_frameworks!</span>
+
+<span class="n">target</span> <span class="s1">'HelloWorldApp'</span> <span class="k">do</span>
+    <span class="n">pod</span> <span class="s1">'AmplifyUtilsNotifications'</span><span class="p">,</span> <span class="s1">'~&gt; 1.0.0'</span>
+<span class="k">end</span>
+</code></pre></li>
+<li><p>Then run the following command:</p>
+<pre class="highlight shell"><code>pod <span class="nb">install</span>
+</code></pre></li>
+<li><p>Open up *.xcworkspace with Xcode, and you will be able to use the <code>AmplifyUtilsNotifications</code> package in your project.</p></li>
+</ol>
+<h2 id='notification-service-extension-for-aws-pinpoint' class='heading'>Notification Service Extension for AWS Pinpoint</h2>
+
+<p>This package includes a ready to use implementation(<code><a href="Classes/AUNotificationService.html">AUNotificationService</a></code>) for handling remote notifications sent by AWS Pinpoint. It helps with decoding notification json data and retrieving the remote media url as an attachment.</p>
+<h4 id='push-notification-in-aws-pinpoint-format' class='heading'>Push notification in AWS Pinpoint format</h4>
+
+<ol>
+<li><p>Add a Service App Extension to Your Project. <a href="https://developer.apple.com/documentation/usernotifications/modifying_content_in_newly_delivered_notifications">Apple Doc</a>.</p>
+
+<p><img src="./readme-images/add-notification-service-extension.png" alt="add-notification-service-extension"></p></li>
+<li><p>Update <code>info.plist</code> of the newly created Notification Service Extension.</p>
+<pre class="highlight xml"><code><span class="nt">&lt;dict&gt;</span>
+    <span class="nt">&lt;key&gt;</span>NSExtension<span class="nt">&lt;/key&gt;</span>
+    <span class="nt">&lt;dict&gt;</span>
+        <span class="nt">&lt;key&gt;</span>NSExtensionPointIdentifier<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>com.apple.usernotifications.service<span class="nt">&lt;/string&gt;</span>
+        <span class="nt">&lt;key&gt;</span>NSExtensionPrincipalClass<span class="nt">&lt;/key&gt;</span>
+        <span class="nt">&lt;string&gt;</span>AmplifyUtilsNotifications.AUNotificationService<span class="nt">&lt;/string&gt;</span>
+    <span class="nt">&lt;/dict&gt;</span>
+<span class="nt">&lt;/dict&gt;</span>
+</code></pre>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    <p></p>
+
+<p>We suggest you either keep the auto generated <code>NotificationService.swift</code> source file or add an empty swift file for your Notification Service Extension target. An empty source list will cause an error when you try to install the extension to a real device.</p>
+
+</div></li>
+</ol>
+<h3 id='push-notification-not-in-aws-pinpoint-format' class='heading'>Push notification not in AWS Pinpoint format</h3>
+
+<p>You can also subclass <code><a href="Classes/AUNotificationService.html">AUNotificationService</a></code> to support a different notification payload format or add custom functionality.</p>
+
+<p>For example, we want to send the push notification with a field name <code>video_url</code>.</p>
+
+<ol>
+<li><p>Define a <code>MyPayload</code> struct that conforms to the <code><a href="Protocols/AUNotificationPayload.html">AUNotificationPayload</a></code> protocol. It defines the <code>remoteMediaURL</code>.</p></li>
+<li><p>Subclass <code><a href="Classes/AUNotificationService.html">AUNotificationService</a></code> and change the <code>payloadSchema</code> property to <code>MyPayload</code> that was defined in the previous step.</p>
+<pre class="highlight swift"><code><span class="kd">import</span> <span class="kt">AmplifyUtilsNotifications</span>
+
+<span class="kd">struct</span> <span class="kt">MyPayload</span><span class="p">:</span> <span class="kt">AUNotificationPayload</span> <span class="p">{</span>
+    <span class="k">var</span> <span class="nv">remoteMediaURL</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span> <span class="p">{</span>
+        <span class="n">video_url</span>
+    <span class="p">}</span>
+
+    <span class="k">let</span> <span class="nv">video_url</span><span class="p">:</span> <span class="kt">String</span>
+<span class="p">}</span>
+
+<span class="kd">class</span> <span class="kt">NotificationService</span><span class="p">:</span> <span class="kt">AUNotificationService</span> <span class="p">{</span>
+
+    <span class="k">override</span> <span class="nf">init</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">super</span><span class="o">.</span><span class="nf">init</span><span class="p">()</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">payloadSchema</span> <span class="o">=</span> <span class="kt">MyPayload</span><span class="o">.</span><span class="k">self</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></li>
+<li><p>Update the <code>info.plist</code> by setting <code>NSExtensionPrincipalClass</code> to <code>$(PRODUCT_MODULE_NAME).NotificationService</code>.</p></li>
+</ol>
+
+<p>You can also override the <code>didReceive</code> function to modify the content as desired. For example, attach suffix <code>[MODIFIED]</code> to your notification title.</p>
+<pre class="highlight swift"><code><span class="k">override</span> <span class="kd">func</span> <span class="nf">didReceive</span><span class="p">(</span>
+    <span class="n">_</span> <span class="nv">request</span><span class="p">:</span> <span class="kt">UNNotificationRequest</span><span class="p">,</span>
+    <span class="n">withContentHandler</span> <span class="nv">contentHandler</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">UNNotificationContent</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span>
+<span class="p">)</span> <span class="p">{</span>
+    <span class="k">super</span><span class="o">.</span><span class="nf">didReceive</span><span class="p">(</span><span class="n">request</span><span class="p">)</span> <span class="p">{</span> <span class="n">content</span> <span class="k">in</span>
+        <span class="k">self</span><span class="o">.</span><span class="n">contentHandler</span> <span class="o">=</span> <span class="n">contentHandler</span>
+        <span class="k">let</span> <span class="nv">mutableContent</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="nf">mutableCopy</span><span class="p">()</span> <span class="k">as?</span> <span class="kt">UNMutableNotificationContent</span>
+        <span class="n">mutableContent</span><span class="p">?</span><span class="o">.</span><span class="n">title</span> <span class="o">=</span> <span class="n">content</span><span class="o">.</span><span class="n">title</span> <span class="o">+</span> <span class="s">"[MODIFIED]"</span>
+        <span class="k">if</span> <span class="k">let</span> <span class="nv">mutableContent</span> <span class="p">{</span>
+            <span class="nf">contentHandler</span><span class="p">(</span><span class="n">mutableContent</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<h2 id='reporting-bugs-feature-requests' class='heading'>Reporting Bugs/Feature Requests</h2>
+
+<p><a href="https://github.com/aws-amplify/amplify-swift-utils-notifications/issues?q=is%3Aissue+is%3Aopen+label%3Abug"><img src="https://img.shields.io/github/issues/aws-amplify/amplify-swift-utils-notifications/bug?color=d73a4a&label=bugs" alt="Open Bugs"></a>
+<a href="https://github.com/aws-amplify/amplify-swift-utils-notifications/issues?q=is%3Aissue+label%3A%22question%22+is%3Aopen+"><img src="https://img.shields.io/github/issues/aws-amplify/amplify-swift-utils-notifications/usage%20question?color=558dfd&label=questions" alt="Open Questions"></a>
+<a href="https://github.com/aws-amplify/amplify-swift-utils-notifications/issues?q=is%3Aissue+label%3A%22feature-request%22+is%3Aopen+"><img src="https://img.shields.io/github/issues/aws-amplify/amplify-swift-utils-notifications/feature%20request?color=ff9001&label=feature%20requests" alt="Feature Requests"></a>
+<a href="https://github.com/aws-amplify/amplify-swift-utils-notifications/issues?q=is%3Aissue+is%3Aclosed+"><img src="https://img.shields.io/github/issues-closed/aws-amplify/amplify-swift-utils-notifications?color=%2325CC00" alt="Closed Issues"></a></p>
+
+<p>We welcome you to use the GitHub issue tracker to report bugs or suggest features.</p>
+
+<p>When filing an issue, please check <a href="https://github.com/aws-amplify/amplify-swift-utils-notifications/issues">existing open</a>, or <a href="https://github.com/aws-amplify/amplify-swift-utils-notifications/issues?utf8=%E2%9C%93&q=is%3Aissue%20is%3Aclosed%20">recently closed</a>, issues to make sure somebody else hasn&rsquo;t already
+reported the issue. Please try to include as much information as you can. Details like these are incredibly useful:</p>
+
+<ul>
+<li>Expected behavior and observed behavior</li>
+<li>A reproducible test case or series of steps</li>
+<li>The version of our code being used</li>
+<li>Any modifications you&rsquo;ve made relevant to the bug</li>
+<li>Anything custom about your environment or deployment</li>
+</ul>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2023 <a class="link" href="https://github.com/aws-amplify/amplify-swift-utils-notifications" target="_blank" rel="external noopener">Amazon Web Services</a>. All rights reserved. (Last updated: 2023-12-14)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.2</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>
