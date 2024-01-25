@@ -1,5 +1,7 @@
 ## Amplify Swift Utilities for Notifications
 
+[![Code Coverage](https://codecov.io/gh/aws-amplify/amplify-swift-utils-notifications/branch/main/graph/badge.svg)](https://codecov.io/gh/aws-amplify/amplify-swift-utils-notifications)
+
 Amplify Swift Utilities for Notifications provides helpful functionality for working with push notifications on iOS and macOS.
 
 Although it was developed for use with AWS Amplify, it can also be used independently.
