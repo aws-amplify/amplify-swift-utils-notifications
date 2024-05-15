@@ -26,13 +26,28 @@ jobs:
           persist-credentials: false
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@250fcd6a742febb1123a77a841497ccaa8b9e939 # v1.152.0
+        uses: ruby/setup-ruby@22fdc77bf4148f810455b226c90fb81b5cbc00a7 # v1.171.0
         with:
           ruby-version: '3.2.1'
           bundler-cache: true
 
       - name: Run unit tests
         run: bundle exec fastlane ios tests
+
+      - name: Generate Coverage Report
+        continue-on-error: true
+        run: |
+          cd Build/Build/ProfileData
+          cd $(ls -d */|head -n 1)
+          pathCoverage=Build/Build/ProfileData/${PWD##*/}/Coverage.profdata
+          cd ${{ github.workspace }}
+          xcrun llvm-cov export -format="lcov" -instr-profile $pathCoverage Build/Build/Products/Debug-iphonesimulator/AmplifyUtilsNotifications.o > AmplifyUtilsNotifications-Coverage.lcov
+
+      - name: Upload Report
+        uses: codecov/codecov-action@eaaf4bedf32dbdc6b720b63067d99c4d77d6047d # v3.1.4
+        continue-on-error: true
+        with:
+          flags: AmplifyUtilsNotifications
 
       - name: Run integration tests
         run: bundle exec fastlane ios integration_tests
@@ -46,7 +61,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@250fcd6a742febb1123a77a841497ccaa8b9e939 # v1.152.0
+        uses: ruby/setup-ruby@22fdc77bf4148f810455b226c90fb81b5cbc00a7 # v1.171.0
         with:
           ruby-version: '3.2.1'
           bundler-cache: true
@@ -63,7 +78,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@250fcd6a742febb1123a77a841497ccaa8b9e939 # v1.152.0
+        uses: ruby/setup-ruby@22fdc77bf4148f810455b226c90fb81b5cbc00a7 # v1.171.0
         with:
           ruby-version: '3.2.1'
           bundler-cache: true
@@ -80,7 +95,7 @@ jobs:
           persist-credentials: false
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@250fcd6a742febb1123a77a841497ccaa8b9e939 # v1.152.0
+        uses: ruby/setup-ruby@22fdc77bf4148f810455b226c90fb81b5cbc00a7 # v1.171.0
         with:
           ruby-version: '3.2.1'
           bundler-cache: true

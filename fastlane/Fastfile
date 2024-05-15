@@ -13,6 +13,9 @@ platform :ios do
             package_path: ".",
             sdk: "iphonesimulator",
             device: "iPhone 14",
+            derived_data_path: "Build/",
+            code_coverage: true,
+            cloned_source_packages_path: "~/Library/Developer/Xcode/DerivedData/AmplifyUtilsNotifications"
         )
     end
 
