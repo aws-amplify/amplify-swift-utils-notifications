@@ -337,7 +337,7 @@ PLATFORMS
 
 DEPENDENCIES
   cocoapods (~> 1.12.0)
-  fastlane (~> 2.211)
+  fastlane (~> 2.225)
   fastlane-plugin-release_actions!
   jazzy (~> 0.14.3)
 
