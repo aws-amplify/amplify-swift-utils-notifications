@@ -12,7 +12,7 @@ platform :ios do
             scheme: "AmplifyUtilsNotifications",
             package_path: ".",
             sdk: "iphonesimulator",
-            device: "iPhone 14",
+            device: "iPhone 16 Pro",
             derived_data_path: "Build/",
             code_coverage: true,
             cloned_source_packages_path: "~/Library/Developer/Xcode/DerivedData/AmplifyUtilsNotifications"
@@ -27,7 +27,7 @@ platform :ios do
             project: "./IntegrationTestApp/IntegrationTestApp.xcodeproj",
             scheme: "IntegrationTestApp",
             sdk: "iphonesimulator",
-            device: "iPhone 14",
+            device: "iPhone 16 Pro",
         )
     end
 
@@ -175,7 +175,7 @@ platform :watchos do
             scheme: "AmplifyUtilsNotifications",
             package_path: ".",
             sdk: "watchsimulator",
-            destination: "platform=watchOS Simulator,name=Apple Watch Series 8 (45mm),OS=latest",
+            destination: "platform=watchOS Simulator,name=Apple Watch Series 10 (46mm),OS=latest",
         )
     end
 end
