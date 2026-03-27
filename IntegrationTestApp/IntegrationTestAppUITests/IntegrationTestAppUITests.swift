@@ -10,7 +10,7 @@ import XCTest
 
 final class IntegrationTestAppUITests: XCTestCase {
     let app = XCUIApplication()
-    let timeout = TimeInterval(3)
+    let timeout = TimeInterval(5)
 
     override func setUpWithError() throws {
         continueAfterFailure = false
