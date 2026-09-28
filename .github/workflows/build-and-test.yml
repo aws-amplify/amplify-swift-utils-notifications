@@ -28,7 +28,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@efbf473cab83af4468e8606cc33eca9281bb213f # v1.256.0
         with:
-          ruby-version: '3.2.1'
+          ruby-version: '3.3'
           bundler-cache: true
 
       - name: Run unit tests
@@ -63,7 +63,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@efbf473cab83af4468e8606cc33eca9281bb213f # v1.256.0
         with:
-          ruby-version: '3.2.1'
+          ruby-version: '3.3'
           bundler-cache: true
 
       - name: Run unit tests
@@ -80,7 +80,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@efbf473cab83af4468e8606cc33eca9281bb213f # v1.256.0
         with:
-          ruby-version: '3.2.1'
+          ruby-version: '3.3'
           bundler-cache: true
 
       - name: Run unit tests
@@ -97,7 +97,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@efbf473cab83af4468e8606cc33eca9281bb213f # v1.256.0
         with:
-          ruby-version: '3.2.1'
+          ruby-version: '3.3'
           bundler-cache: true
 
       - name: Run unit tests
