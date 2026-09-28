@@ -175,7 +175,7 @@ platform :watchos do
             scheme: "AmplifyUtilsNotifications",
             package_path: ".",
             sdk: "watchsimulator",
-            destination: "platform=watchOS Simulator,name=Apple Watch Series 10 (46mm),OS=latest",
+            destination: "platform=watchOS Simulator,name=Apple Watch Series 11 (46mm),OS=latest",
         )
     end
 end
