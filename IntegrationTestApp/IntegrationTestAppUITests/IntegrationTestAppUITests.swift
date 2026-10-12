@@ -20,7 +20,6 @@ final class IntegrationTestAppUITests: XCTestCase {
 
     override func tearDownWithError() throws {
         app.terminate()
-        uninstallApp()
     }
 
     func testRequestNotificationDisplayAlert() throws {
@@ -90,36 +89,6 @@ final class IntegrationTestAppUITests: XCTestCase {
             ).firstMatch.exists)
         } else {
             XCTFail("No permission check alert found")
-        }
-    }
-
-    func uninstallApp() {
-        let appIcon = XCUIApplication.springboard.icons["IntegrationTestApp"]
-        if appIcon.waitForExistence(timeout: timeout) {
-            appIcon.press(forDuration: 2)
-        } else {
-            XCTFail("Failed to find app icon")
-        }
-
-        let removeAppButton = XCUIApplication.springboard.buttons["Remove App"]
-        if removeAppButton.waitForExistence(timeout: timeout) {
-            removeAppButton.tap()
-        } else {
-            XCTFail("Failed to find 'Remove App'")
-        }
-
-        let deleteAppButton = XCUIApplication.springboard.alerts.buttons["Delete App"]
-        if deleteAppButton.waitForExistence(timeout: timeout) {
-            deleteAppButton.tap()
-        } else {
-            XCTFail("Failed to find 'Delete App'")
-        }
-
-        let finalDeleteButton = XCUIApplication.springboard.alerts.buttons["Delete"]
-        if finalDeleteButton.waitForExistence(timeout: timeout) {
-            finalDeleteButton.tap()
-        } else {
-            XCTFail("Failed to find 'Delete'")
         }
     }
 
