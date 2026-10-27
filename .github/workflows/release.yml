@@ -49,8 +49,8 @@ jobs:
       - name:  Publish new version to cocoapods trunk
         env:
           COCOAPODS_SECRET_ARN: ${{ secrets.COCOAPODS_SECRET_ARN }}
-          GITHUB_EMAIL: 336707698+aws-amplify-ops-app[bot]@users.noreply.github.com
-          GITHUB_USER: aws-amplify-ops-app[bot]
+          GITHUB_EMAIL: aws-amplify-ops@amazon.com
+          GITHUB_USER: aws-amplify-ops
         run: bundle exec fastlane ios release
 
       - name: Publish documentation
