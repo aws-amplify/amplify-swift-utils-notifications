@@ -51,8 +51,17 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@ac593985615ec2ede58e132d2e21d2b1cbd6127c # v3.3.0
         with:
-          ref: ${{ needs.generate-doc.outputs.sha }}
+          ref: release
           persist-credentials: false
+
+      - name: Check commit
+        env:
+          DOC_SHA: ${{ needs.generate-doc.outputs.sha }}
+        run: |
+          if [ "$(git rev-parse HEAD)" != "$DOC_SHA" ]; then
+            echo "release moved after the docs were generated, run this workflow again"
+            exit 1
+          fi
 
       - name: Remove docs folder
         run: rm -rf docs
