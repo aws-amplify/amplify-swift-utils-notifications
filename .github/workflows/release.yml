@@ -53,5 +53,11 @@ jobs:
           GITHUB_USER: aws-amplify-ops
         run: bundle exec fastlane ios release
 
-      - name: Publish documentation
-        run: bundle exec fastlane ios publish_doc
+  publish-docs:
+    name: Publish documentation
+    needs: [release]
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/publish_docs.yml
