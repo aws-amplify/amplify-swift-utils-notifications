@@ -320,7 +320,7 @@ GEM
     simctl (1.6.10)
       CFPropertyList
       naturally
-    sqlite3 (2.9.6)
+    sqlite3 (2.10.2)
       mini_portile2 (~> 2.8.0)
     terminal-notifier (2.0.0)
     terminal-table (4.0.0)
