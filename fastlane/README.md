@@ -39,13 +39,13 @@ Run integration test on iOS simulator
 
 Publish to Cocoapods whenever a new version tag is created
 
-### ios publish_doc
+### ios generate_doc
 
 ```sh
-[bundle exec] fastlane ios publish_doc
+[bundle exec] fastlane ios generate_doc
 ```
 
-Generate and publish documentaion for new version
+Generate jazzy documentaion
 
 ----
 

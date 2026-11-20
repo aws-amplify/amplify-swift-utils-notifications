@@ -54,21 +54,8 @@ platform :ios do
         sync_up_main_release_branch
     end
 
-    desc "Generate and publish documentaion for new version"
-    lane :publish_doc do
-        new_version = generate_doc
-        git_add(path: "docs/*")
-        git_commit(path: "docs/*", message: "chore: update API document for #{new_version} [skip ci]")
-        push_to_git_remote(
-            local_branch: "release",
-            remote_branch: "gh-pages",
-            tags: true,
-            force: true,
-        )
-    end
-
     desc "Generate jazzy documentaion"
-    private_lane :generate_doc do
+    lane :generate_doc do
         pod_version = version_get_podspec(path: PODSPEC_PATH)
         jazzy(config: ".jazzy.yaml", module_version: pod_version)
         Dir.chdir('..') do
